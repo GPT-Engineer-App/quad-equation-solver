@@ -1,0 +1,39 @@
+function Solve-BiquadraticEquation {
+    param (
+        [double]$a,
+        [double]$b,
+        [double]$c
+    )
+
+    # Решаем квадратное уравнение ay^2 + by + c = 0
+    $discriminant = $b * $b - 4 * $a * $c
+
+    if ($discriminant -lt 0) {
+        Write-Output "Нет действительных корней"
+        return
+    }
+
+    $y1 = (-$b + [math]::Sqrt($discriminant)) / (2 * $a)
+    $y2 = (-$b - [math]::Sqrt($discriminant)) / (2 * $a)
+
+    $roots = @()
+
+    if ($y1 -ge 0) {
+        $roots += [math]::Sqrt($y1)
+        $roots += -[math]::Sqrt($y1)
+    }
+
+    if ($y2 -ge 0) {
+        $roots += [math]::Sqrt($y2)
+        $roots += -[math]::Sqrt($y2)
+    }
+
+    if ($roots.Count -eq 0) {
+        Write-Output "Нет действительных корней"
+    } else {
+        Write-Output "Корни уравнения: $($roots -join ', ')"
+    }
+}
+
+# Пример использования
+Solve-BiquadraticEquation -a 1 -b -5 -c 4
